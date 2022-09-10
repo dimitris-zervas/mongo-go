@@ -14,12 +14,13 @@ func Connect(context context.Context, uri string) (*mongo.Client, error) {
 		return nil, err
 	}
 
-	// defer func() {
-	// 	if err = client.Disconnect(context); err != nil {
-	// 		panic(err)
-	// 	}
-	// }()
-
 	log.Println("Successfully connected to the Database!")
 	return client, err
+}
+
+func Disconnect(context context.Context, client *mongo.Client) {
+	if err := client.Disconnect(context); err != nil {
+		log.Panic("Unable to disconnect from the database", err)
+		panic(err)
+	}
 }
