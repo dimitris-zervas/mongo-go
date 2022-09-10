@@ -23,4 +23,6 @@ func Disconnect(context context.Context, client *mongo.Client) {
 		log.Panic("Unable to disconnect from the database", err)
 		panic(err)
 	}
+
+	log.Println("Successfully disconnected from the Database.")
 }
