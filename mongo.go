@@ -6,6 +6,7 @@ import (
 
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
+	"go.mongodb.org/mongo-driver/mongo/readpref"
 )
 
 func Connect(context context.Context, uri string) (*mongo.Client, error) {
@@ -25,4 +26,11 @@ func Disconnect(context context.Context, client *mongo.Client) {
 	}
 
 	log.Println("Successfully disconnected from the Database.")
+}
+
+func Ping(client *mongo.Client) {
+	if err := client.Ping(context.TODO(), readpref.Primary()); err != nil {
+		panic(err)
+	}
+	log.Println("Pinged the database")
 }
