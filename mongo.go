@@ -4,7 +4,6 @@ import (
 	"context"
 	"log"
 
-	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"go.mongodb.org/mongo-driver/mongo/readpref"
@@ -34,17 +33,4 @@ func Ping(client *mongo.Client) {
 		panic(err)
 	}
 	log.Println("Pinged the database")
-}
-
-func AddFieldIndex(collection *mongo.Collection, field string) (string, error) {
-	indexModel := mongo.IndexModel{
-		Keys: bson.D{{field, 1}},
-	}
-
-	name, err := collection.Indexes().CreateOne(context.TODO(), indexModel)
-	if err != nil {
-		return "nil", err
-	}
-
-	return name, nil
 }
