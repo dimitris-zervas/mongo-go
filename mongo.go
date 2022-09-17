@@ -2,7 +2,8 @@ package mongo
 
 import (
 	"context"
-	"log"
+
+	log "github.com/sirupsen/logrus"
 
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -15,7 +16,7 @@ func Connect(context context.Context, uri string) (*mongo.Client, error) {
 		return nil, err
 	}
 
-	log.Println("Successfully connected to the Database!")
+	log.Info("Successfully connected to the Database!")
 	return client, err
 }
 
@@ -25,12 +26,12 @@ func Disconnect(context context.Context, client *mongo.Client) {
 		panic(err)
 	}
 
-	log.Println("Successfully disconnected from the Database.")
+	log.Info("Successfully disconnected from the Database.")
 }
 
 func Ping(client *mongo.Client) {
 	if err := client.Ping(context.TODO(), readpref.Primary()); err != nil {
-		panic(err)
+		log.Panic(err)
 	}
 	log.Println("Pinged the database")
 }
